@@ -5,6 +5,9 @@ export const useAuthStore = defineStore("auth", {
     user: null,
     isAuth: false,
   }),
+  persist: {
+    storage: piniaPluginPersistedstate.localStorage(),
+  }, 
   actions: {
     async login(username: string, password: string) {
       if (username === "" || password === "") return;
