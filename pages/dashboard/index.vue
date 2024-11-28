@@ -119,10 +119,6 @@
 </template>
 
 <script setup lang="ts">
-onBeforeMount(async () => {
-  await callOnce(postsStore.fetchPosts);
-});
-
 const postsStore = usePostsStore();
 
 const blogTitle = ref("");
@@ -142,6 +138,8 @@ const notificationType = ref("");
 const editPostData = ref<any>({});
 
 const idDeletePost = ref<number | null>(null);
+
+await useAsyncData("posts", () => postsStore.fetchPosts());
 
 const handleResetNotif = () => {
   let timeoutID;

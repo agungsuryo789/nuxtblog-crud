@@ -47,9 +47,7 @@
 <script setup lang="ts">
 const postsStore = usePostsStore();
 
-onBeforeMount(async () => {
-  await callOnce(postsStore.fetchPosts);
-});
+await useAsyncData('posts', () => postsStore.fetchPosts());
 
 const posts = toRaw(postsStore.posts);
 

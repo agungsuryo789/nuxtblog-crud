@@ -55,9 +55,7 @@ export const usePostsStore = defineStore("posts", {
       } catch (error) {
         console.log(error);
       } finally {
-        setTimeout(() => {
-          this.loading = false;
-        }, 150);
+        this.loading = false;
       }
     },
     async fetchPostDetail(id: number) {
@@ -71,9 +69,7 @@ export const usePostsStore = defineStore("posts", {
       } catch (error) {
         console.log(error);
       } finally {
-        setTimeout(() => {
-          this.loading = false;
-        }, 150);
+        this.loading = false;
       }
     },
     async searchPost(param: string) {
@@ -87,9 +83,7 @@ export const usePostsStore = defineStore("posts", {
       } catch (error) {
         console.error("Failed to search posts", error);
       } finally {
-        setTimeout(() => {
-          this.loading = false;
-        }, 150);
+        this.loading = false;
       }
     },
 
@@ -102,9 +96,7 @@ export const usePostsStore = defineStore("posts", {
       } catch (error) {
         console.error("Failed to create post", error);
       } finally {
-        setTimeout(() => {
-          this.loading = false;
-        }, 150);
+        this.loading = false;
       }
     },
 
@@ -116,9 +108,7 @@ export const usePostsStore = defineStore("posts", {
       } catch (error) {
         console.error("Failed to delete post", error);
       } finally {
-        setTimeout(() => {
-          this.loading = false;
-        }, 150);
+        this.loading = false;
       }
     },
 
@@ -134,9 +124,7 @@ export const usePostsStore = defineStore("posts", {
       } catch (error) {
         console.error("Failed to update post", error);
       } finally {
-        setTimeout(() => {
-          this.loading = false;
-        }, 150);
+        this.loading = false;
       }
     },
   },
