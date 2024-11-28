@@ -1,4 +1,8 @@
-# Nuxt Starter
+# Nuxt Blog Website
+
+- [Instalation](#setup)
+- [Feature](#feature)
+- [Tech Stack](#tech-stack-used)
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
