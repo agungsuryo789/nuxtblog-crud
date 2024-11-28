@@ -7,7 +7,7 @@
       <LoaderCardPost />
     </div>
   </div>
-  
+
   <section
     v-if="!postsStore.loading"
     class="gap-4 grid grid-cols-1 md:grid-cols-6 xl:grid-cols-9 overflow-hidden"
@@ -47,7 +47,9 @@
 <script setup lang="ts">
 const postsStore = usePostsStore();
 
-await callOnce(postsStore.fetchPosts);
+onBeforeMount(async () => {
+  await callOnce(postsStore.fetchPosts);
+});
 
 const posts = toRaw(postsStore.posts);
 
