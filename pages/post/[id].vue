@@ -31,9 +31,15 @@
 const postsStore = usePostsStore();
 const { id } = useRoute().params;
 
-onBeforeMount(async () => {
-  await postsStore.fetchPostDetail(Number(id));
+definePageMeta({
+  title: postsStore.detail.title,
+  meta: [
+    { name: 'description', content: postsStore.detail.title },
+    { name: 'keywords', content: 'blog, post, nuxt' }
+  ]
 });
+
+await useAsyncData('posts-detail', () => postsStore.fetchPostDetail(Number(id)));
 </script>
 
 <style scoped></style>
