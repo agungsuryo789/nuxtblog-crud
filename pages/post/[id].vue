@@ -31,15 +31,5 @@
 const postsStore = usePostsStore();
 const { id } = useRoute().params;
 
-definePageMeta({
-  title: postsStore.detail.title,
-  meta: [
-    { name: 'description', content: postsStore.detail.title },
-    { name: 'keywords', content: 'blog, post, nuxt' }
-  ]
-});
-
 await useAsyncData('posts-detail', () => postsStore.fetchPostDetail(Number(id)));
 </script>
-
-<style scoped></style>
