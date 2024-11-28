@@ -45,6 +45,14 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  title: 'Home - Read all the blog post',
+  meta: [
+    { name: 'description', content: 'Read all the blog post.' },
+    { name: 'keywords', content: 'blog, post, nuxt' }
+  ]
+});
+
 const postsStore = usePostsStore();
 
 await useAsyncData('posts', () => postsStore.fetchPosts());
