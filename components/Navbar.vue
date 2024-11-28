@@ -2,7 +2,9 @@
   <nav
     class="top-0 z-50 sticky flex md:flex-row flex-col justify-between items-center md:content-center gap-4 bg-white shadow-md py-4"
   >
-    <p class="mx-2 font-bold font-serif text-xl hover:scale-105 duration-75 delay-75">
+    <p
+      class="mx-2 font-bold font-serif text-xl hover:scale-105 duration-75 delay-75"
+    >
       <NuxtLink to="/">NuxtBlog!</NuxtLink>
     </p>
     <div
@@ -13,6 +15,8 @@
         type="text"
         placeholder="search posts..."
         class="focus:outline-none"
+        v-model="paramSearch"
+        @input="handleSearchPost"
       />
     </div>
     <ul class="flex gap-2 px-2 w-fit">
@@ -40,15 +44,28 @@
 
 <script setup lang="ts">
 const userStore = useAuthStore();
+const postsStore = usePostsStore();
 const route = useRoute();
-const router = useRouter()
+const router = useRouter();
+
+const paramSearch = ref("");
 
 const isLoginPage = computed(() => route.path === "/login");
 const isDashboard = computed(() => route.path === "/dashboard");
 const isHomePage = computed(() => route.path === "/");
 
+let timeoutId: number | undefined;
+
+const handleSearchPost = async () => {
+  if (timeoutId) clearTimeout(timeoutId);
+
+  timeoutId = window.setTimeout(async () => {
+    await postsStore.searchPost(paramSearch.value);
+  }, 350);
+};
+
 const handleLogout = () => {
   userStore.logout();
-  router.push('/')
+  router.push("/");
 };
 </script>

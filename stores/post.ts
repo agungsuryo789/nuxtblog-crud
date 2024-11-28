@@ -32,33 +32,112 @@ export const usePostsStore = defineStore("posts", {
   state: () => ({
     posts: [] as PostProps[],
     detail: {} as PostDetail,
+    loading: false,
   }),
   persist: {
     storage: piniaPluginPersistedstate.localStorage(),
   },
   actions: {
     async fetchPosts() {
-      const { posts }: PostsResponse = await $fetch(
-        "https://dummyjson.com/posts"
-      );
+      this.loading = true;
 
-      //filter duplicate data
-      const mergedPosts = [...this.posts, ...posts].filter(
-        (post, index, self) => index === self.findIndex((p) => p.id === post.id)
-      );
+      try {
+        const { posts }: PostsResponse = await $fetch(
+          "https://dummyjson.com/posts"
+        );
+        //filter duplicate data
+        const mergedPosts = [...this.posts, ...posts].filter(
+          (post, index, self) =>
+            index === self.findIndex((p) => p.id === post.id)
+        );
 
-      this.posts = mergedPosts.sort((a, b) => b.id - a.id);
+        this.posts = mergedPosts.sort((a, b) => b.id - a.id);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setTimeout(() => {
+          this.loading = false;
+        }, 150);
+      }
     },
     async fetchPostDetail(id: number) {
-      const res: PostDetail = await $fetch("https://dummyjson.com/posts/" + id);
-      this.detail = res;
+      this.loading = true;
+
+      try {
+        const res: PostDetail = await $fetch(
+          "https://dummyjson.com/posts/" + id
+        );
+        this.detail = res;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setTimeout(() => {
+          this.loading = false;
+        }, 150);
+      }
     },
+    async searchPost(param: string) {
+      this.loading = true;
+
+      try {
+        const { posts }: PostsResponse = await $fetch(
+          `https://dummyjson.com/posts/search?q=${param}`
+        );
+        this.posts = posts;
+      } catch (error) {
+        console.error("Failed to search posts", error);
+      } finally {
+        setTimeout(() => {
+          this.loading = false;
+        }, 150);
+      }
+    },
+
     async createPost(newPost: PostProps) {
-      const createdPost = { ...newPost, id: Date.now() };
-      this.posts.push(createdPost);
+      this.loading = true;
+
+      try {
+        const createdPost = { ...newPost, id: Date.now() };
+        this.posts.push(createdPost);
+      } catch (error) {
+        console.error("Failed to create post", error);
+      } finally {
+        setTimeout(() => {
+          this.loading = false;
+        }, 150);
+      }
     },
-    async deletePost(id: number) {
-      this.posts = this.posts.filter((post) => post.id !== id);
+
+    async deletePost(id: number | null) {
+      this.loading = true;
+
+      try {
+        this.posts = this.posts.filter((post) => post.id !== id);
+      } catch (error) {
+        console.error("Failed to delete post", error);
+      } finally {
+        setTimeout(() => {
+          this.loading = false;
+        }, 150);
+      }
+    },
+
+    async editPost(data: { id: number; title: string; body: string }) {
+      this.loading = true;
+
+      try {
+        this.posts = this.posts.map((post) =>
+          post.id === data.id
+            ? { ...post, title: data.title, body: data.body }
+            : post
+        );
+      } catch (error) {
+        console.error("Failed to update post", error);
+      } finally {
+        setTimeout(() => {
+          this.loading = false;
+        }, 150);
+      }
     },
   },
 });

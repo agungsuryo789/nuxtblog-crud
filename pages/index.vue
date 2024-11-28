@@ -1,5 +1,15 @@
 <template>
+  <div
+    v-if="postsStore.loading"
+    class="gap-4 grid grid-cols-1 md:grid-cols-6 xl:grid-cols-9 overflow-hidden"
+  >
+    <div class="col-span-1 md:col-span-3 xl:col-span-3" v-for="n in 6" :key="n">
+      <LoaderCardPost />
+    </div>
+  </div>
+  
   <section
+    v-if="!postsStore.loading"
     class="gap-4 grid grid-cols-1 md:grid-cols-6 xl:grid-cols-9 overflow-hidden"
   >
     <article
