@@ -1,4 +1,4 @@
-# Nuxt Minimal Starter
+# Nuxt Starter
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
@@ -73,3 +73,14 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+## Feature
+
+1. Login Page
+2. Dashboard for Create , Edit , Delete Blog Post
+3. Search
+
+## Tech Stack Used
+Nuxt JS
+Tailwind
+Pinia
