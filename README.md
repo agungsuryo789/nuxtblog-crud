@@ -5,6 +5,7 @@
 - [Tech Stack](#tech-stack-used)
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Demo Live (https://nuxtblog-crud.vercel.app/)
 
 ## Setup
 
