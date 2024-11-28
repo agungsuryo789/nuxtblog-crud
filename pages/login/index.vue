@@ -17,12 +17,14 @@
           class="border-2 shadow-md px-4 py-2 rounded-md focus:outline-sky-400 duration-100 delay-100"
           placeholder="username"
           v-model="username"
+          required
         />
         <input
           type="password"
           class="border-2 shadow-md px-4 py-2 rounded-md focus:outline-sky-400 duration-100 delay-100"
           placeholder="password"
           v-model="password"
+          required
         />
         <button
           type="submit"
@@ -32,6 +34,11 @@
         </button>
       </form>
     </div>
+    <Notification
+      :isVisible="showNotification"
+      :message="notificationMessage"
+      :type="notificationType"
+    />
   </section>
 </template>
 
@@ -41,19 +48,49 @@ definePageMeta({
 });
 
 const router = useRouter();
-
 const userStore = useAuthStore();
+
 const username = ref("admin");
 const password = ref("admin123");
+const showNotification = ref(false);
+const notificationMessage = ref("");
+const notificationType = ref("");
+
+const handleResetNotif = () => {
+  let timeoutID;
+
+  timeoutID = setTimeout(() => {
+    showNotification.value = false;
+    notificationMessage.value = "";
+    notificationType.value = "";
+  }, 1500);
+};
+
+const handleNotifSuccess = () => {
+  showNotification.value = true;
+  notificationMessage.value = "Login Success";
+  notificationType.value = "success";
+  handleResetNotif();
+};
+
+const handleNotifError = () => {
+  showNotification.value = true;
+  notificationMessage.value = "Please enter valid credentials";
+  notificationType.value = "error";
+
+  handleResetNotif();
+};
 
 const handleLogin = async () => {
   if (username.value && password.value) {
     await userStore.login(username.value, password.value);
     if (userStore.isAuthenticated) {
+      handleNotifSuccess();
+
       router.push("/");
     }
   } else {
-    alert("Please enter valid credentials");
+    handleNotifError();
   }
 };
 </script>
